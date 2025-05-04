@@ -22,8 +22,7 @@ namespace Tibia_Timers
         {
             InitializeComponent();
             StopBtn.Enabled = false;
-            // Configurar el Timer
-            countdownTimer.Interval = 1000; // 1 segundo
+            countdownTimer.Interval = 1000;
             countdownTimer.Tick += CountdownTimer_Tick;
         }
 
@@ -37,7 +36,7 @@ namespace Tibia_Timers
 
             if (!PotionCheckBox.Checked && string.IsNullOrEmpty(NeckTextBox.Text) && string.IsNullOrEmpty(RingTextBox.Text))
             {
-                TitleLabel.Text = "llene algun campo para iniciar";
+                TitleLabel.Text = "Fill any text box to start";
             }
             else if (PotionCheckBox.Checked || !string.IsNullOrEmpty(NeckTextBox.Text) || !string.IsNullOrEmpty(RingTextBox.Text))
             {
@@ -67,7 +66,6 @@ namespace Tibia_Timers
                     GlobalTimmer = TimerRing;
                 }
 
-                // Configurar el ProgressBar
                 NeckProgressBar.Maximum = TimerNeck;
                 NeckProgressBar.Value = TimerNeck;
                 RingProgressBar.Maximum = TimerRing;
@@ -78,7 +76,6 @@ namespace Tibia_Timers
                     PotionProgressBar.Value = TimerPotion;
                 }
 
-                // Iniciar el Timer
                 higesthTimer();
                 countdownTimer.Start();
                 TitleLabel.Text = @$"Tibia timer countdown: {GlobalTimmer}";
@@ -97,7 +94,7 @@ namespace Tibia_Timers
                     NeckProgressBar.Value = TimerNeck;
                     if (TimerNeck < 60 && !neckCheck)
                     {
-                        Alert("MENOS DE 1 MINUTO", "Tibia timer NECK");
+                        Alert("LESS THAN 1 MINUTE", "Tibia timer NECK");
                         neckCheck = true;
                     }
                 }
@@ -107,7 +104,7 @@ namespace Tibia_Timers
                     RingProgressBar.Value = TimerRing;
                     if (TimerRing < 60 && !ringCheck)
                     {
-                        Alert("MENOS DE 1 MINUTO", "Tibia timer RING");
+                        Alert("LESS THAN 1 MINUTE", "Tibia timer RING");
                         ringCheck = true;
                     }
                 }
@@ -117,7 +114,7 @@ namespace Tibia_Timers
                     PotionProgressBar.Value = TimerPotion;
                     if (TimerPotion < 60 && !potionCheck)
                     {
-                        Alert("MENOS DE 1 MINUTO", "Tibia timer POTION");
+                        Alert("LESS THAN 1 MINUTE", "Tibia timer POTION");
                         potionCheck = true;
                     }
                 }
@@ -126,8 +123,9 @@ namespace Tibia_Timers
             }
             else
             {
+                ResetTimer();
                 countdownTimer.Stop();
-                TitleLabel.Text = "¡Tiempo terminado!";
+                TitleLabel.Text = "¡Tiem UP!";
             }
         }
         private void higesthTimer()
@@ -135,7 +133,6 @@ namespace Tibia_Timers
             int[] timers = { TimerNeck, TimerRing, TimerPotion };
             int highestTimer = timers.Max();
             GlobalTimmer = highestTimer;
-            //TitleLabel.Text = @$"Tibia timer countdown: {GlobalTimmer}";
         }
 
         private void Alert(string message, string Title)
@@ -175,7 +172,7 @@ namespace Tibia_Timers
             higesthTimer();
         }
 
-        private void StopBtn_Click(object sender, EventArgs e)
+        private void ResetTimer() 
         {
             NeckTextBox.Enabled = true;
             RingTextBox.Enabled = true;
@@ -188,6 +185,11 @@ namespace Tibia_Timers
             neckCheck = false;
             ringCheck = false;
             StartBtn.Enabled = true;
+        }
+
+        private void StopBtn_Click(object sender, EventArgs e)
+        {
+            ResetTimer();
             countdownTimer.Stop();
         }
     }
